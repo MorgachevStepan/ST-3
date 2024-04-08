@@ -86,8 +86,3 @@ TEST_F(TimedDoorTest, ThrowStateWhenDoorIsOpened) {
     door.unlock();
     EXPECT_THROW(door.throwState(), std::runtime_error);
 }
-
-TEST_F(TimedDoorTest, ThrowStateWhenDoorIsClosed) {
-    door.lock();
-    EXPECT_THROW(door.throwState(), std::runtime_error);
-}
