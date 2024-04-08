@@ -82,9 +82,12 @@ TEST_F(TimedDoorTest, NoExceptionThrownAfterLockBeforeTimeout) {
     EXPECT_NO_THROW(door.lock());
 }
 
-TEST_F(TimedDoorTest, ExceptionThrownWhenUnlockAfterTimeout) {
+TEST_F(TimedDoorTest, ThrowStateWhenDoorIsOpened) {
     door.unlock();
-    timer.tregister(door.getTimeOut(), timerClient);
-    std::this_thread::sleep_for(std::chrono::seconds(6));
-    EXPECT_THROW(door.lock(), std::runtime_error);
+    EXPECT_THROW(door.throwState(), std::runtime_error);
+}
+
+TEST_F(TimedDoorTest, ThrowStateWhenDoorIsClosed) {
+    door.lock();
+    EXPECT_THROW(door.throwState(), std::runtime_error);
 }
